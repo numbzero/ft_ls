@@ -47,7 +47,8 @@ t_file	*new_node(char *name, char const *dir_name)
 	new->n_link = f_stat.st_nlink;
 	new->size = f_stat.st_size;
 	new->time = get_time(f_stat);
-	/* ... */
+	new->major = MAJOR(f_stat.st_rdev);
+	new->minor = MINOR(f_stat.st_rdev);
 	new->next = NULL;
 	return (new);
 }
