@@ -64,6 +64,9 @@ t_time	get_time(struct stat f_stat)
 	time.atime = strdup(ft_ldate(ctime(&f_stat.st_atime)));
 	time.ctime = strdup(ft_ldate(ctime(&f_stat.st_ctime)));
 	time.mtime = strdup(ft_ldate(ctime(&f_stat.st_mtime)));
+	time.t_atime = f_stat.st_atime;
+	time.t_ctime = f_stat.st_ctime;
+	time.t_mtime = f_stat.st_mtime;
 	return (time);	
 }
 

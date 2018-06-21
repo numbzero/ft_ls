@@ -1,23 +1,10 @@
 #include "ft_ls.h"
 
-int		main(int argc, char const *argv[])
+int		main(int argc, char *argv[])
 {
-	t_file	*list;
+	t_proc	var;
 
-	list = NULL;
-	if (argc == 2)
-	{
-		list = get_one_dir(argv[1]);
-		alphabetic_sort(&list);
-		long_output(list);
-		free_list(&list);
-	}
-	else if (argc == 3)
-	{
-		recursive(argv[1]);	
-	}
-	else
-		printf("program_name: <directory_name>\n");
+	var = process_args(argc, argv);
+	ls(var);
 	return (0);
  }
-

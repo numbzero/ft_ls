@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-t_file	*get_one_dir(char const *dir_name)
+t_file	*get_one_dir(char *dir_name, int i)
 {
 	DIR 			*dr;
 	struct dirent 	*de;
@@ -13,31 +13,41 @@ t_file	*get_one_dir(char const *dir_name)
 		printf("Could not open current directory!\n");
 		exit(1);
 	}
-	while ((de = readdir(dr)) != NULL)
-		list_add(&list, de->d_name, dir_name);
+	if (!i) {
+		while ((de = readdir(dr)) != NULL) {
+			if (de->d_name[0] != '.')
+				list_add(&list, de->d_name, dir_name);
+		}
+	}
+	else {
+		while ((de = readdir(dr)) != NULL) 
+				list_add(&list, de->d_name, dir_name);
+	}
 	closedir(dr);
 	return (list);
 }
 
-void	list_add(t_file **list_ref, char *name, char const *dir_name)
+void	list_add(t_file **list_ref, char *name, char *dir_name)
 {
 	while (*list_ref != NULL)
 		list_ref = &(*list_ref)->next;
 	*list_ref = new_node(name, dir_name);
 }
 
-t_file	*new_node(char *name, char const *dir_name)
+t_file	*new_node(char *name, char *dir_name)
 {
 	t_file		*new;
 	struct stat	f_stat;
 
 	new = (t_file *)malloc(sizeof(t_file));
-	if (new == NULL)
-		exit(1);
-	if (strcmp(dir_name, "/") == 0)
-		new->full_name = concatenate1(dir_name, name);
-	else
-		new->full_name = concatenate2(dir_name, "/", name);
+	if (dir_name != NULL) {
+		if (new == NULL)
+			exit(1);
+		if (strcmp(dir_name, "/") == 0)
+			new->full_name = concatenate1(dir_name, name);
+		else
+			new->full_name = concatenate2(dir_name, "/", name);
+	} else new->full_name = strdup(name);
 	new->name = strdup(name);
 	if (lstat(new->full_name, &f_stat) < 0)
 		exit(1);

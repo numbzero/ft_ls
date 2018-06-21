@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-char 	*concatenate1(char const *a, char *b)
+char 	*concatenate1(char *a, char *b)
 {
 	char 	*res;
     size_t	alen;
@@ -14,7 +14,7 @@ char 	*concatenate1(char const *a, char *b)
     return (res);
 }
 
-char 	*concatenate2(char const *a, char *b, char *c)
+char 	*concatenate2(char *a, char *b, char *c)
 {
 	char 	*res;
     size_t	alen;
